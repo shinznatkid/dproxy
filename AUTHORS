@@ -1,0 +1,9 @@
+-*- restructuredtext -*-
+
+The Django Proxy is developed and maintained by Shinz Natkid.
+
+Many thanks to Yuri van der Meer and Will Larson for providing the inspiration and original source
+code for this app:
+
+https://github.com/yvandermeer/django-http-proxy
+http://lethain.com/entry/2008/sep/30/suffer-less-by-using-django-dev-server-as-a-proxy/

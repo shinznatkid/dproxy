@@ -1,2 +1,0 @@
-# django-proxy
-Django Proxy
