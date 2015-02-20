@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 from os.path import abspath, dirname, join
 
-version = release = '0.1.1'
+version = release = '0.1.2'
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
