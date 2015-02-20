@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.1.2
+~~~
+
+* Change minimum requirements on setup.
+
 0.1.1
 ~~~
 
