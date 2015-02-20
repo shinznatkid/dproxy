@@ -135,6 +135,7 @@ class DProxy(View):
         r = self.session.post(request_url, data=request.POST, headers=headers)
         response_body = r.content
         status = r.status_code
+        self.save_session(request)
         logger.info('"POST {}" {}'.format(self.url, status, len(response_body)))
         return HttpResponse(response_body, status=status, content_type=r.headers['Content-Type'])
 

@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 from os.path import abspath, dirname, join
 
+version = release = '0.1.1'
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
@@ -48,4 +49,3 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
     html_theme = 'sphinx_rtd_theme'
     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
-version = release = '0.1.0'
