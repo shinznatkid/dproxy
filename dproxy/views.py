@@ -86,6 +86,10 @@ class DProxy(View):
         """
         proxy_root = self.original_request_path.rsplit(request.path, 1)[0]
         response.content = REWRITE_REGEX.sub(r'\1{}/'.format(proxy_root), response.content)
+
+        host = request.META['HTTP_HOST'].rstrip('/')
+        response.content = response.content.replace(self.base_url.rstrip('/'), host)
+
         return response
 
     def get_session(self, request):
@@ -114,12 +118,15 @@ class DProxy(View):
         self.get_session(request)
         request_url = self.get_full_url(self.url)
         headers = self.get_header(request)
-        r = self.session.get(request_url, params=request.GET, headers=headers)
+        r = self.session.get(request_url, params=request.GET, headers=headers, allow_redirects=False)
         response_body = r.content
         status = r.status_code
         self.save_session(request)
         logger.info('"GET {}" {}'.format(self.url, status, len(response_body)))
-        return HttpResponse(response_body, status=status, content_type=r.headers['Content-Type'])
+        http_response = HttpResponse(response_body, status=status, content_type=r.headers['Content-Type'])
+        if 'Location' in r.headers:
+            http_response['Location'] = r.headers['Location']
+        return http_response
 
     def raw_rewrite(self, request, content):
         if self.rewrite:
@@ -132,12 +139,15 @@ class DProxy(View):
         self.get_session(request)
         request_url = self.get_full_url(self.url)
         headers = self.get_header(request)
-        r = self.session.post(request_url, data=request.POST, headers=headers)
+        r = self.session.post(request_url, data=request.POST, headers=headers, allow_redirects=False)
         response_body = r.content
         status = r.status_code
         self.save_session(request)
         logger.info('"POST {}" {}'.format(self.url, status, len(response_body)))
-        return HttpResponse(response_body, status=status, content_type=r.headers['Content-Type'])
+        http_response = HttpResponse(response_body, status=status, content_type=r.headers['Content-Type'])
+        if 'Location' in r.headers:
+            http_response['Location'] = r.headers['Location']
+        return http_response
 
     def get_full_url(self, url):
         """
