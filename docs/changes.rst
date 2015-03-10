@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.1.3
+~~~
+
+* Fixed bug redirect.
+
 0.1.2
 ~~~
 
